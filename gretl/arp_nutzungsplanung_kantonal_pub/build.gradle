@@ -1,24 +1,16 @@
 import ch.so.agi.gretl.tasks.*
 import java.nio.file.Paths
-import de.undercouch.gradle.tasks.download.Download
 
 apply plugin: "ch.so.agi.gretl"
-apply plugin: "de.undercouch.download"
 
 defaultTasks 'importData'
 
-
-tasks.register('fubar') {
-    doLast {
-        println "Hallo Welt"
-    }
-}
-
-tasks.register('importData', Ili2pgImport) {
+tasks.register('importData', Ili2pgReplace) {
     database = [dbUriPub, dbUserPub, dbPwdPub]
-    dbschema = "agi_inventar_hoheitsgrenzen_pub_v1"
-    dataFile = "ilidata:ch.so.agi.av.inventar_kantonsgrenzzeichen"
-    deleteData = true
+    dbschema = "arp_nutzungsplanung_pub_v2"
+    models = "SO_ARP_Nutzungsplanung_Publikation_20201005"
+    dataFile = "ilidata:ch.so.arp.nutzungsplanung.kantonal"
+    dataset = "kantonal"
     disableValidation = false
 }
 

@@ -17,6 +17,7 @@ dataSets.each { dataSet ->
     tasks.register("importData_$dataSet", Ili2pgReplace) {
         database = [dbUriPub, dbUserPub, dbPwdPub]
         dbschema = "arp_nutzungsplanung_pub_v2"
+        models = "SO_ARP_Nutzungsplanung_Publikation_20201005"
         dataFile = dataSetFile
         dataset = dataSet
         disableValidation = true
