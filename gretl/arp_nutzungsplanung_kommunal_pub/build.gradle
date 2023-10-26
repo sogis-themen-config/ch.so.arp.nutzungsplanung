@@ -7,18 +7,25 @@ apply plugin: "de.undercouch.download"
 
 defaultTasks 'importData'
 
+def dataSets = ['2546', '2581']
 
-tasks.register('fubar') {
-    doLast {
-        println "Hallo Welt"
+dataSets.each { dataSet ->
+
+    def dataSetFile = "ilidata:"+dataSet+".ch.so.arp.nutzungsplanung.kommunal"
+    println(dataSetFile)
+
+    tasks.register("importData_$dataSet", Ili2pgReplace) {
+        database = [dbUriPub, dbUserPub, dbPwdPub]
+        dbschema = "arp_nutzungsplanung_pub_v2"
+        dataFile = dataSetFile
+        dataset = dataSet
+        disableValidation = true
     }
 }
 
-tasks.register('importData', Ili2pgImport) {
-    database = [dbUriPub, dbUserPub, dbPwdPub]
-    dbschema = "agi_inventar_hoheitsgrenzen_pub_v1"
-    dataFile = "ilidata:ch.so.agi.av.inventar_kantonsgrenzzeichen"
-    deleteData = true
-    disableValidation = false
+task importData() {
+    description = "Import all datasets."
+    dependsOn {
+        tasks.findAll { task -> task.name.startsWith('importData_') }
+    }
 }
-
