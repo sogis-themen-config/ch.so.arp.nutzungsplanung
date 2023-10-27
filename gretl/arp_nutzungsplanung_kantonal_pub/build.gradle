@@ -11,6 +11,6 @@ tasks.register('importData', Ili2pgReplace) {
     models = "SO_ARP_Nutzungsplanung_Publikation_20201005"
     dataFile = "ilidata:ch.so.arp.nutzungsplanung.kantonal"
     dataset = "kantonal"
-    disableValidation = false
+    disableValidation = true
 }
 
